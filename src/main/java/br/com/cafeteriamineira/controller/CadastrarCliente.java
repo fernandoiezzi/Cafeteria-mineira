@@ -53,6 +53,7 @@ public class CadastrarCliente extends HttpServlet {
 		
 		ClienteDao cdao = new ClienteDao();
 		boolean retornocliente = cdao.incluir(c);
+		response.sendRedirect("listarclientes.jsp");
 	}
 
 }

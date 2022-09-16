@@ -1,6 +1,9 @@
 package br.com.cafeteriamineira.model.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.cafeteriamineira.model.entidade.Cliente;
 
@@ -29,4 +32,37 @@ public class ClienteDao extends Conexao {
 		return ok;
 	}
 
+
+public List<Cliente> listar(String buscaCliente){
+	List<Cliente> listac = new ArrayList<Cliente>();
+	
+	String sql = "select * from cliente";
+	try {
+		PreparedStatement ps = criarConexao().prepareStatement(sql);
+		ps.setString(1, "%" + buscaCliente + "%");
+		ResultSet rs = ps.executeQuery();
+		
+		Cliente c;
+		while(rs.next()) {
+			c = new Cliente();
+			c.setId_cliente(rs.getLong("idcliente"));
+			c.setNome(rs.getString("nome"));
+			c.setTelefone(rs.getString("telefone"));
+			c.setEndereco(rs.getString("endereco"));
+			c.setCidade(rs.getString("cidade"));
+			c.setBairro(rs.getString("bairro"));
+			c.setEstado(rs.getString("estado"));
+			
+			listac.add(c);
+		}
+	}
+		catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			fecharConexao();
+		}
+		return listac;
+	
 }
+}
+

@@ -84,6 +84,7 @@ public String getEstado() {
 public void setEstado(String estado) {
 	this.estado = estado;
 }
+
  
  
 }
